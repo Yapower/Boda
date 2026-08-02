@@ -308,3 +308,184 @@ body.details-body {
     height: auto;
     margin-top: 220px; 
 }
+
+/*==========================
+        CONTADOR
+==========================*/
+
+.countdown-section{
+
+    width:100%;
+    background:#96a78d;
+    padding:25px 15px;
+    text-align:center;
+
+}
+
+.countdown-title{
+
+    font-family:'Great Vibes', cursive;
+    font-size:48px;
+    font-weight:400;
+    color:#f3ecde;
+    margin-bottom:25px;
+    white-space: nowrap;      /* Evita que se parta en dos líneas */
+    text-align:center;
+
+}
+
+.countdown-container{
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:55px;
+    flex-wrap:wrap;
+
+}
+
+.countdown-item{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+}
+
+.countdown-item span{
+
+    font-family:'Montserrat', sans-serif;
+    font-size:62px;
+    font-weight:300;
+    color:#f3ecde;
+    line-height:1;
+
+}
+
+.countdown-item small{
+
+    margin-top:8px;
+
+    font-family:'Montserrat', sans-serif;
+    font-size:14px;
+    font-weight:600;
+
+    letter-spacing:3px;
+
+    color:#f3ecde;
+
+}
+
+#mensaje{
+
+    margin-top:25px;
+
+    font-family:'Great Vibes', cursive;
+    font-size:40px;
+    color:#f3ecde;
+
+}
+
+@media(max-width:768px){
+
+    .countdown-container{
+
+        gap:25px;
+
+    }
+
+    .countdown-item span{
+
+        font-size:44px;
+
+    }
+
+    .countdown-item small{
+
+        font-size:11px;
+
+        letter-spacing:2px;
+
+    }
+
+    .countdown-title{
+
+        font-size:20px;
+        white-space:normal;
+
+
+    }
+
+}
+
+/*==========================
+        CELULAR
+==========================*/
+
+@media(max-width:768px){
+
+    .countdown-title{
+
+        font-size:42px;
+
+    }
+
+
+
+    .time-box span{
+
+        font-size:40px;
+
+    }
+
+    .time-box p{
+
+        font-size:16px;
+
+    }
+
+}
+
+/* ==========================================
+   CORRECCIÓN PARA LA PÁGINA DE DETALLES
+========================================== */
+
+body.details-body{
+
+    display:block !important;
+
+    width:100%;
+
+    min-height:100vh;
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+.details-wrapper{
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:0 auto;
+
+    padding-top:40px;
+
+}
+
+.countdown-section{
+
+    width:100%;
+
+    margin-top:80px;
+
+    clear:both;
+
+}
