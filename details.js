@@ -1,33 +1,41 @@
-const targetDate = new Date("January 24, 2027 16:30:00").getTime();
+const targetDate = new Date("2027-01-24T16:30:00").getTime();
 
-function updateCountdown(){
+function updateCountdown() {
 
     const now = new Date().getTime();
 
     const distance = targetDate - now;
 
-    if(distance <= 0){
+    if (distance <= 0) {
 
-        document.getElementById("countdown").innerHTML =
-        "<h2>¡Hoy es el gran día!</h2>";
+        clearInterval(interval);
+
+        document.getElementById("days").innerText = "0";
+        document.getElementById("hours").innerText = "0";
+        document.getElementById("minutes").innerText = "0";
+        document.getElementById("seconds").innerText = "0";
+
+        document.getElementById("mensaje").innerHTML =
+            "¡Hoy es el gran día!";
 
         return;
+
     }
 
-    const days = Math.floor(distance / (1000*60*60*24));
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
 
     const hours = Math.floor(
-        (distance % (1000*60*60*24)) /
-        (1000*60*60)
+        (distance % (1000 * 60 * 60 * 24)) /
+        (1000 * 60 * 60)
     );
 
     const minutes = Math.floor(
-        (distance % (1000*60*60)) /
-        (1000*60)
+        (distance % (1000 * 60 * 60)) /
+        (1000 * 60)
     );
 
     const seconds = Math.floor(
-        (distance % (1000*60)) /
+        (distance % (1000 * 60)) /
         1000
     );
 
@@ -40,4 +48,4 @@ function updateCountdown(){
 
 updateCountdown();
 
-setInterval(updateCountdown,1000);
+const interval = setInterval(updateCountdown, 1000);
