@@ -1,0 +1,310 @@
+/* ==========================================================================
+   1. Reset de Estilos y Variables
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #ffffff;
+    --bg-cream: #f4eee1;
+    --green-main: #557a46;
+    --green-muted: #657160;
+    --green-dark: #3a4738;
+    --text-primary: #222522;
+    --text-secondary: #596157;
+    --font-elegant: 'Great Vibes', cursive;
+    --font-body: 'Montserrat', sans-serif;
+}
+
+/* ==========================================================================
+   2. Configuración del Cuerpo (Contenedor de la pantalla completa)
+   ========================================================================== */
+html, body {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-color);
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Evita scrolls causados por las imágenes que sobresalen */
+    position: relative; /* Permite que los esquineros se anclen al body */
+}
+
+/* ==========================================================================
+   3. Contenedor de la Invitación (Texto y Sobre)
+   ========================================================================== */
+.invitation-container {
+    width: 100%;
+    max-width: 450px;
+    height: 100%;
+    max-height: 80vh; /* Bajado un poco para dar más aire a los esquineros */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+    z-index: 2; /* Garantiza que el contenido esté siempre por encima de las esquinas */
+}
+
+/* ==========================================================================
+   4. Estilos para los Esquineros Ilustrados (Efecto integrado en bordes)
+   ========================================================================== */
+.corner-img {
+    position: absolute;
+    width: 250px; /* Tamaño grande para que abrace e invada la pantalla */
+    height: auto;
+    z-index: 1; /* Quedan como fondo decorativo */
+    pointer-events: none; /* No interfieren con toques o clics */
+}
+
+/* Esquina Superior Izquierda (Se ocultan los bordes rectos hacia afuera) */
+.corner-top-left {
+    top: -35px;
+    left: -35px;
+}
+
+/* Esquina Inferior Derecha (Se ocultan los bordes rectos hacia afuera) */
+.corner-bottom-right {
+    bottom: -45px;
+    right: -45px;
+}
+
+/* ==========================================================================
+   5. Estilos del Texto
+   ========================================================================== */
+.hero-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: fadeInDown 1.4s ease-out;
+}
+
+.subtitle {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.blanco {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    color: transparent;
+}
+
+
+.couple-names {
+    font-family: var(--font-elegant);
+    font-size: 3.6rem; /* Ligeramente más grande para balancear la composición */
+    margin: 12px 0;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--green-main);
+}
+
+.date {
+    font-size: 1.1rem;
+    font-weight: 450;
+    letter-spacing: 3px;
+    color: var(--green-dark);
+    z-index: 2;
+    animation: fadeInUp 1.4s ease-out; /* Ahora aparece suavemente junto con el sobre */
+}
+
+/* ==========================================================================
+   6. Contenedor del Sobre
+   ========================================================================== */
+.envelope-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 40vh;
+    animation: fadeInUp 1.4s ease-out;
+}
+
+.envelope-img {
+    max-width: 80%;
+    height: auto;
+    object-fit: contain;
+    cursor: pointer;
+    margin: 0 auto;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0px 10px 25px rgba(0, 0, 0, 0.08));
+}
+
+.envelope-img:hover {
+    transform: scale(1.04) translateY(-5px);
+}
+
+/* ==========================================================================
+   7. Animaciones de Entrada (Keyframes)
+   ========================================================================== */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   9. Estilos Exclusivos para la Página de Detalles (Permite Scroll)
+   ========================================================================== */
+
+/* Nueva clase para el body de detalles que desactiva el overflow oculto */
+body.details-body {
+    overflow-y: auto !important; /* Permite scroll vertical */
+    align-items: flex-start;    /* El contenido empieza arriba y baja naturalmente */
+    padding: 60px 20px;         /* Espacio para que el contenido no pegue con los esquineros */
+}
+
+.details-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Separación limpia entre secciones */
+    z-index: 2;
+}
+
+.details-header .title-elegant {
+    font-family: var(--font-elegant);
+    font-size: 3.5rem;
+    color: var(--green-main);
+    font-weight: 400;
+}
+
+/* Tarjetas de información base con tu gama de colores */
+.info-card {
+    background-color: #fafbfc; /* Un blanco roto muy sutil */
+    border: 1px solid rgba(89, 97, 87, 0.1); /* Borde súper fino con tu gris verdoso */
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.info-card h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.info-card p {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   10. Estilos para Sobre Abierto, Fecha, Invitación y Detalles
+   ========================================================================== */
+
+/* Contenedor alineado al centro de la sección (ahora en columna) */
+.header-visual {
+    display: flex;
+    flex-direction: column; /* Alinea el bloque de imágenes arriba y detalles.png abajo */
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    /* AJUSTE: Incrementado para empujar detalles.png por debajo del -230px de la invitación */
+    gap: 240px; 
+}
+
+/* Contenedor relativo para poder usar posición absoluta en las imágenes encimadas */
+.images-container {
+    position: relative;
+    width: 100%;
+    max-width: 320px; /* Controla el tamaño máximo del sobre abierto */
+    margin: 0 auto;
+}
+
+/* Imagen del sobre abierto centrado */
+.img-envelope-open {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    z-index: 1;
+}
+
+.versiculo{
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: -40px auto 10px auto;
+}
+
+
+/* Imagen de la fecha (Esquina inferior izquierda encimada) - BASE FIJA TUYA */
+.img-date-badge {
+    position: absolute;
+    width: 190px; 
+    height: auto;
+    
+    left: -40px;   
+    bottom: -100px; 
+    
+    z-index: 2;    /* Capa intermedia */
+    pointer-events: none;
+}
+
+.img-invitation-badge {
+    position: absolute;
+    width: 300px; 
+    height: auto;
+    
+    left: 80px;   
+    bottom: -270px; 
+    
+    z-index: 3;    /* Capa superior (por encima de la fecha y el sobre) */
+    pointer-events: none;
+}
+
+.img-details-title {
+    position: absolute;
+    width: 220px; /* Ajusta el tamaño de tu imagen de título "detalles" aquí */
+    height: auto;
+    display: block;
+    
+    /* ALINEACIÓN DIRECTA DEBAJO DE INVITACIÓN: */
+    left: -40px;    /* Centrado sutil respecto a la invitación */
+    bottom: -420px; /* Desfase calculado para quedar perfectamente debajo */
+    
+    /* CAPA MÁXIMA: */
+    z-index: 5;     /* Corona el diseño quedando por encima de todo el resto */
+}
+
+.header-visual{
+    padding: 0;
+    margin: 0;
+}
+
+.images-container{
+    margin-bottom: 0;
+}
+
+.img-historia{
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 180px; 
+}
