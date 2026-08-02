@@ -261,7 +261,7 @@ body.details-body {
     height: auto;
     
     left: -40px;   
-    bottom: -100px; 
+    bottom: -140px; 
     
     z-index: 2;    /* Capa intermedia */
     pointer-events: none;
@@ -273,7 +273,7 @@ body.details-body {
     height: auto;
     
     left: 80px;   
-    bottom: -270px; 
+    bottom: -310px; 
     
     z-index: 3;    /* Capa superior (por encima de la fecha y el sobre) */
     pointer-events: none;
@@ -287,7 +287,7 @@ body.details-body {
     
     /* ALINEACIÓN DIRECTA DEBAJO DE INVITACIÓN: */
     left: -40px;    /* Centrado sutil respecto a la invitación */
-    bottom: -420px; /* Desfase calculado para quedar perfectamente debajo */
+    bottom: -460px; /* Desfase calculado para quedar perfectamente debajo */
     
     /* CAPA MÁXIMA: */
     z-index: 5;     /* Corona el diseño quedando por encima de todo el resto */
@@ -306,5 +306,5 @@ body.details-body {
     display: block;
     width: 100%;
     height: auto;
-    margin-top: 180px; 
+    margin-top: 220px; 
 }
