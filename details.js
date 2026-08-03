@@ -49,3 +49,43 @@ function updateCountdown() {
 updateCountdown();
 
 const interval = setInterval(updateCountdown, 1000);
+
+
+//agregar calendario//
+
+function agregarCalendario(){
+
+    const evento = `
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:Boda Yoab & Daniela
+DESCRIPTION:Celebración de nuestra boda
+DTSTART:20270124T100000
+DTEND:20270124T170000
+LOCATION:
+END:VEVENT
+END:VCALENDAR
+`;
+
+    const blob = new Blob([evento], {
+        type:"text/calendar"
+    });
+
+
+    const url = URL.createObjectURL(blob);
+
+
+    const enlace = document.createElement("a");
+
+    enlace.href = url;
+    enlace.download = "Boda_Yoab_Daniela.ics";
+
+    document.body.appendChild(enlace);
+
+    enlace.click();
+
+    document.body.removeChild(enlace);
+
+
+}
