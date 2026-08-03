@@ -271,11 +271,33 @@ body.details-body {
     height: auto;
     
     left: -40px;   
-    bottom: -140px; 
+    bottom: -170px; 
     
     z-index: 2;    /* Capa intermedia */
     pointer-events: none;
 }
+
+.img-date-badge1 {
+    position: absolute;
+    width: 200px; 
+    height: auto;
+    
+    left: 150px;   
+    bottom: -100px; 
+    
+    z-index: 2;    /* Capa intermedia */
+    pointer-events: none;
+}
+
+.date-button{
+    display:block;
+    cursor:pointer;
+}
+
+.img-date-badge{
+    pointer-events:none;
+}
+
 
 .img-invitation-badge {
     position: absolute;
@@ -283,7 +305,7 @@ body.details-body {
     height: auto;
     
     left: 80px;   
-    bottom: -310px; 
+    bottom: -380px; 
     
     z-index: 3;    /* Capa superior (por encima de la fecha y el sobre) */
     pointer-events: none;
@@ -297,7 +319,7 @@ body.details-body {
     
     /* ALINEACIÓN DIRECTA DEBAJO DE INVITACIÓN: */
     left: -40px;    /* Centrado sutil respecto a la invitación */
-    bottom: -460px; /* Desfase calculado para quedar perfectamente debajo */
+    bottom: -570px; /* Desfase calculado para quedar perfectamente debajo */
     
     /* CAPA MÁXIMA: */
     z-index: 5;     /* Corona el diseño quedando por encima de todo el resto */
@@ -316,7 +338,7 @@ body.details-body {
     display: block;
     width: 100%;
     height: auto;
-    margin-top: 220px; 
+    margin-top: 320px; 
 }
 
 /*==========================
