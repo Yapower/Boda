@@ -171,6 +171,15 @@ html, body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Clases de fade para la página de detalles */
+.fade-down {
+    animation: fadeInDown 1.4s ease-out;
+}
+
+.fade-up {
+    animation: fadeInUp 1.4s ease-out;
+}
+
 /* ==========================================================================
    9. Estilos Exclusivos para la Página de Detalles (Permite Scroll)
    ========================================================================== */
@@ -264,17 +273,12 @@ body.details-body {
 }
 
 
-/* Imagen de la fecha (Esquina inferior izquierda encimada) - BASE FIJA TUYA */
+/* Imagen de la fecha dentro del botón: ocupa todo el ancho del botón y es clicable */
 .img-date-badge {
-    position: absolute;
-    width: 190px; 
+    width: 100%;
     height: auto;
-    
-    left: -40px;   
-    bottom: -170px; 
-    
-    z-index: 2;    /* Capa intermedia */
-    pointer-events: none;
+    display: block;
+    pointer-events: auto;
 }
 
 .img-date-badge1 {
@@ -294,8 +298,16 @@ body.details-body {
     cursor:pointer;
 }
 
-.img-date-badge{
-    pointer-events:none;
+/* Botón: la imagen de fecha en su posición original, y solo el área de la imagen es clicable */
+#guardar-fecha {
+    position: absolute;
+    width: 190px;
+    left: -40px;
+    bottom: -170px;
+    z-index: 4;
+    display: block;
+    cursor: pointer;
+    line-height: 0; /* El alto del botón se ajusta exactamente a la altura de la imagen */
 }
 
 
@@ -311,19 +323,53 @@ body.details-body {
     pointer-events: none;
 }
 
-.img-details-title {
+
+.img-invitation-badge1 {
     position: absolute;
-    width: 220px; /* Ajusta el tamaño de tu imagen de título "detalles" aquí */
+    width: 180px; 
+    height: auto;
+    
+    left: -80px;   
+    bottom: -340px; 
+    
+    z-index: 3;    /* Capa superior (por encima de la fecha y el sobre) */
+    pointer-events: none;
+}
+
+.img-details-title {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: auto;
+}
+
+/* Botón: la imagen de detalles en su posición original, y solo el área de la imagen es clicable */
+#ver-itinerario {
+    position: absolute;
+    width: 220px; /* Mismo ancho que la imagen de detalles */
+    left: -40px;
+    bottom: -570px;
+    z-index: 5;
+    display: block;
+    cursor: pointer;
+    line-height: 0; /* El alto del botón se ajusta exactamente a la altura de la imagen */
+}
+
+
+.img-details-title1 {
+    position: absolute;
+    width: 150px; /* Ajusta el tamaño de tu imagen de título "detalles" aquí */
     height: auto;
     display: block;
     
     /* ALINEACIÓN DIRECTA DEBAJO DE INVITACIÓN: */
-    left: -40px;    /* Centrado sutil respecto a la invitación */
-    bottom: -570px; /* Desfase calculado para quedar perfectamente debajo */
+    left: 220px;    /* Centrado sutil respecto a la invitación */
+    bottom: -590px; /* Desfase calculado para quedar perfectamente debajo */
     
     /* CAPA MÁXIMA: */
     z-index: 5;     /* Corona el diseño quedando por encima de todo el resto */
 }
+
 
 .header-visual{
     padding: 0;
@@ -338,7 +384,16 @@ body.details-body {
     display: block;
     width: 100%;
     height: auto;
-    margin-top: 320px; 
+    margin-top: 0;
+}
+
+/* Botón: la imagen de historia conserva su posición original y solo su área es clicable */
+#ver-historia{
+    display: block;
+    width: 100%;
+    margin-top: 360px;
+    cursor: pointer;
+    line-height: 0; /* El alto del botón se ajusta exactamente a la altura de la imagen */
 }
 
 /*==========================
