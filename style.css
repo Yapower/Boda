@@ -942,6 +942,7 @@ padding: 85px 20px 50px 20px;
   position: absolute;
   border-radius: 50%;
   inset: 7px;
+  pointer-events: none;
 }
 
 .button:before {
@@ -979,6 +980,7 @@ padding: 85px 20px 50px 20px;
   position: absolute;
   top: 0;
   left: 0;
+  pointer-events: none;
 }
 
 .button-elem {
@@ -988,6 +990,7 @@ padding: 85px 20px 50px 20px;
   margin: 17px 18px 0 18px;
   transform: rotate(180deg);
   fill: var(--green-muted);
+  pointer-events: none;
 }
 
 .button:hover .button-box,
