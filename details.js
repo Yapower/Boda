@@ -55,14 +55,14 @@ const interval = setInterval(updateCountdown, 1000);
 
 function agregarCalendario(){
 
-    const evento = `
+const evento = `
 BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
 SUMMARY:Boda Yoab & Daniela
 DESCRIPTION:Celebración de nuestra boda
-DTSTART:20270124T100000
-DTEND:20270124T170000
+DTSTART:20270124T163000
+DTEND:20270124T173000
 LOCATION:
 END:VEVENT
 END:VCALENDAR
@@ -85,7 +85,13 @@ END:VCALENDAR
 
     enlace.click();
 
-    document.body.removeChild(enlace);
+document.body.removeChild(enlace);
 
 
 }
+
+// Al hacer clic en el botón de fecha, se agrega el evento al calendario
+document.getElementById('guardar-fecha').addEventListener('click', (e) => {
+    e.preventDefault();
+    agregarCalendario();
+});
