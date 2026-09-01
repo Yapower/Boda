@@ -3011,3 +3011,12 @@ body.itinerario-body {
 
     border-color: var(--green-main);
 }
+
+
+.frase-cursiva {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.3rem;
+    font-weight: 400;
+    text-align: center;
+    color: var(--green-main);
+}
