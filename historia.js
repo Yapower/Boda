@@ -238,3 +238,77 @@ if (document.readyState === 'loading') {
     inicializarGaleriaFan();
 }
 
+
+/* ==========================================================
+   CONSERVAR CÓDIGO DEL INVITADO EN LOS ENLACES
+========================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const codigoInvitado =
+        params.get("invitado");
+
+
+    if (!codigoInvitado) {
+        return;
+    }
+
+
+    const enlaces =
+        document.querySelectorAll("a[href]");
+
+
+    enlaces.forEach(enlace => {
+
+        const href =
+            enlace.getAttribute("href");
+
+
+        if (!href) {
+            return;
+        }
+
+
+        if (href.startsWith("#")) {
+            return;
+        }
+
+
+        if (href.startsWith("javascript:")) {
+            return;
+        }
+
+
+        if (
+            href.startsWith("http://")
+            ||
+            href.startsWith("https://")
+            ||
+            href.startsWith("mailto:")
+            ||
+            href.startsWith("tel:")
+        ) {
+            return;
+        }
+
+
+        if (!href.includes(".html")) {
+            return;
+        }
+
+
+        const separador =
+            href.includes("?")
+                ? "&"
+                : "?";
+
+
+        enlace.href =
+            `${href}${separador}invitado=${encodeURIComponent(codigoInvitado)}`;
+
+    });
+
+});
