@@ -1,16 +1,466 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="itinerario-html">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yoab y Daniela</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Página en blanco del itinerario -->
-    <main class="itinerario-wrapper">
-        <!-- Aquí irá el itinerario -->
-    </main>
-</body>
-</html>
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Itinerario | Yoab y Daniela</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+
+<body class="itinerario-body">
+
+    <main class="itinerario-wrapper">
+
+
+        <!-- =====================================================
+             INVITADOS
+             SUPABASE REEMPLAZARÁ ESTE CONTENIDO
+        ====================================================== -->
+
+        <section class="itinerario-invitados fade-down">
+
+            <p class="itinerario-pretitle">
+                Tenemos el honor de invitar a
+            </p>
+
+            <h1
+                id="nombre-grupo"
+                class="itinerario-nombre-grupo"
+            >
+                Nuestros invitados
+            </h1>
+
+
+            <div
+                id="lista-invitados"
+                class="itinerario-lista-invitados"
+            >
+
+                <!--
+                    SUPABASE INSERTARÁ AQUÍ
+                    LOS NOMBRES REALES
+                -->
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             INTRODUCCIÓN
+        ====================================================== -->
+
+        <section class="evento-intro fade-up">
+
+            <p class="evento-mini">
+                Todo está listo...
+            </p>
+
+            <h2>
+                Nos vemos muy pronto
+            </h2>
+
+            <p class="evento-intro-texto">
+                Hemos preparado cada detalle con mucho cariño
+                y queremos que disfruten este día tanto como nosotros.
+            </p>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             INFORMACIÓN DEL EVENTO
+        ====================================================== -->
+
+        <section class="evento-experiencia">
+
+
+            <!-- =================================================
+                 1. UBICACIÓN
+            ================================================== -->
+
+            <article class="evento-bloque ubicacion-bloque fade-up">
+
+
+                <div class="evento-texto">
+
+                    <span class="evento-numero">
+                        01
+                    </span>
+
+                    <p class="evento-etiqueta">
+                        El lugar
+                    </p>
+
+                    <h3>
+                        Donde comienza nuestra celebración
+                    </h3>
+
+                    <p>
+                        Hemos elegido un lugar muy especial para compartir
+                        con ustedes uno de los días más importantes de
+                        nuestra historia.
+                    </p>
+
+
+                </div>
+
+
+
+                <div class="evento-imagen ubicacion-imagen">
+
+                    <a
+                        href="https://maps.app.goo.gl/wM2bH54TvWRmLSvs9"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Abrir ubicación de la boda en Google Maps"
+                    >
+
+                        <img
+                            src="ubicacion.png"
+                            alt="Ubicación de la boda"
+                        >
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 2. VESTIMENTA
+            ================================================== -->
+
+            <article class="evento-bloque vestimenta-bloque fade-up">
+
+
+                <div class="evento-texto">
+
+                    <span class="evento-numero">
+                        02
+                    </span>
+
+                    <p class="evento-etiqueta">
+                        Código de vestimenta
+                    </p>
+
+                    <h3>
+                        Elegantes y listos para celebrar
+                    </h3>
+
+                    <p>
+                        Queremos verlos lucir increíbles,
+                        pero sobre todo disfrutar, bailar
+                        y celebrar esta noche junto a nosotros.
+                    </p>
+
+                </div>
+
+
+
+                <div class="evento-imagen vestimenta-imagen">
+
+                    <img
+                        src="vestimenta.png"
+                        alt="Código de vestimenta formal"
+                    >
+
+                </div>
+
+            </article>
+
+
+
+            <!-- =================================================
+                 FRASE INTERMEDIA
+            ================================================== -->
+
+            <div class="evento-frase fade-up">
+
+                <span class="comillas">
+                    “
+                </span>
+
+                <p>
+                    No contamos los minutos para que termine el día,
+                    sino los momentos que harán que nunca lo olvidemos.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 3. ITINERARIO
+            ================================================== -->
+
+            <article class="evento-itinerario fade-up">
+
+                <div class="itinerario-encabezado">
+
+                    <p class="evento-etiqueta">
+                        Nuestro día
+                    </p>
+
+                    <h2>
+                        Itinerario
+                    </h2>
+
+                    <p>
+                        Estos son algunos de los momentos
+                        que compartiremos juntos.
+                    </p>
+
+                </div>
+
+
+                <div class="itinerario-marco">
+
+                    <img
+                        src="itinerario.png"
+                        alt="Itinerario de la boda"
+                    >
+
+                </div>
+
+
+                <p class="itinerario-cierre">
+                    Y después... a disfrutar, brindar y bailar.
+                </p>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             REGALOS
+        ====================================================== -->
+
+        <section class="itinerario-regalos fade-up">
+
+
+            <div class="regalos-encabezado">
+
+                <p class="evento-etiqueta">
+                    Un detalle para nosotros
+                </p>
+
+                <h2>
+                    El mejor regalo será compartir este día con ustedes.
+                </h2>
+
+            </div>
+
+
+            <div class="itinerario-mensaje-regalos">
+
+                <p>
+                    Pero si desean obsequiarnos algo más,
+                    pueden hacerlo a través de nuestra mesa de regalos
+                    o, si lo prefieren, ayudarnos a construir nuestros
+                    próximos sueños mediante una transferencia.
+                </p>
+
+                <p class="itinerario-gracias">
+                    Gracias por ser parte del comienzo
+                    de nuestra nueva aventura.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MESA DE REGALOS + TARJETA
+            ================================================== -->
+
+            <div class="itinerario-opciones-regalos">
+
+
+                <!-- AMAZON -->
+
+                <div class="regalo-bloque regalo-amazon">
+
+                    <a
+                        href="https://www.amazon.com.mx/wedding/guest-view/1C8MSSCAR99PR"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="itinerario-regalo-link"
+                        aria-label="Abrir mesa de regalos en Amazon"
+                    >
+
+                        <img
+                            src="mesa de regalos.png"
+                            alt="Mesa de regalos"
+                            class="itinerario-img-regalo"
+                        >
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- TRANSFERENCIA -->
+
+                <div class="regalo-bloque regalo-tarjeta">
+
+                    <img
+                        src="tarjeta.png"
+                        alt="Datos para transferencia"
+                        class="itinerario-img-regalo"
+                    >
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             AVISO SOLO ADULTOS
+        ====================================================== -->
+
+        <section class="seccion-adultos fade-up">
+
+            <span class="adultos-corazon">
+                ♡
+            </span>
+
+            <h2>
+                Una noche para disfrutar
+            </h2>
+
+            <p>
+                Con mucho cariño, hemos reservado esta celebración
+                exclusivamente para adultos.
+                Esperamos que puedan acompañarnos y disfrutar
+                de una noche inolvidable junto a nosotros.
+            </p>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONFIRMACIÓN
+             PREPARADA PARA SUPABASE
+        ====================================================== -->
+
+        <section
+            class="itinerario-confirmacion fade-up"
+            id="confirmacion"
+        >
+
+            <p class="confirmacion-mini">
+                ¿Nos acompañas?
+            </p>
+
+            <h2>
+                Confirma tu asistencia
+            </h2>
+
+
+            <p class="itinerario-confirmacion-texto">
+                Nos encantará saber si podrás acompañarnos
+                en este día tan especial.
+            </p>
+
+
+
+            <!-- =================================================
+                 AQUÍ SUPABASE GENERARÁ LOS INVITADOS
+            ================================================== -->
+
+            <div
+                id="confirmacion-invitados"
+                class="itinerario-confirmacion-contenido"
+            >
+
+                <div class="itinerario-confirmacion-placeholder">
+
+                    <span>
+                        Espacio reservado para las confirmaciones
+                    </span>
+
+                    <small>
+                        Los nombres y opciones de asistencia
+                        aparecerán aquí.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BOTÓN CONFIRMAR
+            ================================================== -->
+
+            <button
+                type="button"
+                id="btn-confirmar"
+                class="itinerario-btn-confirmar"
+                disabled
+            >
+                Confirmar asistencia
+            </button>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CIERRE
+        ====================================================== -->
+
+        <section class="itinerario-despedida fade-up">
+
+            <p>
+                Gracias por formar parte de nuestra historia.
+            </p>
+
+            <span>
+                Nos vemos en nuestro gran día
+            </span>
+
+        </section>
+
+
+        <p class="itinerario-firma">
+            Yoab &amp; Daniela
+        </p>
+
+
+    </main>
+
+</body>
+
+</html>
