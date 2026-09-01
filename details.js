@@ -95,3 +95,98 @@ document.getElementById('guardar-fecha').addEventListener('click', (e) => {
     e.preventDefault();
     agregarCalendario();
 });
+
+
+/* ==========================================================
+   CONSERVAR CÓDIGO DEL INVITADO EN LOS ENLACES
+========================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Obtener ?invitado=XXXX de la URL actual
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const codigoInvitado =
+        params.get("invitado");
+
+
+    // Si no hay código, no hacemos nada
+    if (!codigoInvitado) {
+        return;
+    }
+
+
+    /*
+        Buscar todos los enlaces de la página.
+
+        Esto funciona aunque tengas enlaces hacia:
+
+        itinerario.html
+        histori.html
+        historia.html
+        historia3.html
+
+        No necesitamos poner IDs especiales.
+    */
+
+    const enlaces =
+        document.querySelectorAll("a[href]");
+
+
+    enlaces.forEach(enlace => {
+
+        const href =
+            enlace.getAttribute("href");
+
+
+        // Ignorar enlaces vacíos
+        if (!href) {
+            return;
+        }
+
+
+        // Ignorar anclas internas
+        if (href.startsWith("#")) {
+            return;
+        }
+
+
+        // Ignorar javascript
+        if (href.startsWith("javascript:")) {
+            return;
+        }
+
+
+        // Ignorar enlaces externos
+        if (
+            href.startsWith("http://")
+            ||
+            href.startsWith("https://")
+            ||
+            href.startsWith("mailto:")
+            ||
+            href.startsWith("tel:")
+        ) {
+            return;
+        }
+
+
+        // Solo modificar páginas HTML
+        if (!href.includes(".html")) {
+            return;
+        }
+
+
+        const separador =
+            href.includes("?")
+                ? "&"
+                : "?";
+
+
+        enlace.href =
+            `${href}${separador}invitado=${encodeURIComponent(codigoInvitado)}`;
+
+    });
+
+});
