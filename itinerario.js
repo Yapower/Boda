@@ -1,23 +1,39 @@
 const SUPABASE_URL = "https://qxuecqhwfzmepadrmibe.supabase.co";
 const SUPABASE_KEY = "sb_publishable_xQ3k-t-PyR9HCLvMP4AzSQ_xRaAhs03";
 
-const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const db = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
-async function probarConexion() {
-    console.log("Probando conexión con Supabase...");
+async function probarGrupo() {
+
+    console.log("Buscando grupo de prueba...");
+
+    const codigoPrueba = "CHAR";
 
     const { data, error } = await db
         .from("grupos_invitacion")
         .select("*")
-        .limit(5);
+        .eq("codigo", codigoPrueba)
+        .maybeSingle();
 
     if (error) {
-        console.error("Error de Supabase:", error);
+        console.error("Error buscando grupo:", error);
         return;
     }
 
-    console.log("Conexión correcta.");
-    console.log("Datos recibidos:", data);
+    if (!data) {
+        console.log("No se encontró el grupo:", codigoPrueba);
+        return;
+    }
+
+    console.log("Grupo encontrado:");
+    console.log(data);
+
 }
 
-document.addEventListener("DOMContentLoaded", probarConexion);
+document.addEventListener(
+    "DOMContentLoaded",
+    probarGrupo
+);
