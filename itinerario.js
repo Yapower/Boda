@@ -6,34 +6,77 @@ const db = supabase.createClient(
     SUPABASE_KEY
 );
 
-async function probarGrupo() {
+async function probarPersonasDelGrupo() {
 
-    console.log("Buscando grupo de prueba...");
+    console.log("Buscando grupo...");
 
     const codigoPrueba = "CHAR";
 
-    const { data, error } = await db
+
+    // 1. Buscar grupo por código
+    const { data: grupo, error: errorGrupo } = await db
         .from("grupos_invitacion")
-        .select("*")
+        .select("id, codigo, nombre_grupo")
         .eq("codigo", codigoPrueba)
         .maybeSingle();
 
-    if (error) {
-        console.error("Error buscando grupo:", error);
+
+    if (errorGrupo) {
+        console.error("Error buscando grupo:", errorGrupo);
         return;
     }
 
-    if (!data) {
+
+    if (!grupo) {
         console.log("No se encontró el grupo:", codigoPrueba);
         return;
     }
 
+
     console.log("Grupo encontrado:");
-    console.log(data);
+    console.log(grupo);
+
+
+    // 2. Buscar personas que pertenecen al grupo
+    console.log("Buscando personas del grupo...");
+
+    const { data: personas, error: errorPersonas } = await db
+        .from("personas")
+        .select("id, grupo_id, nombre, apellido, tipo")
+        .eq("grupo_id", grupo.id)
+        .order("id", { ascending: true });
+
+
+    if (errorPersonas) {
+        console.error(
+            "Error buscando personas:",
+            errorPersonas
+        );
+
+        return;
+    }
+
+
+    console.log("Personas encontradas:");
+    console.log(personas);
+
+
+    // 3. Mostrar nombres uno por uno
+    personas.forEach(persona => {
+
+        const nombreCompleto =
+            `${persona.nombre} ${persona.apellido || ""}`.trim();
+
+        console.log(
+            `Invitado: ${nombreCompleto} | Tipo: ${persona.tipo}`
+        );
+
+    });
 
 }
 
+
 document.addEventListener(
     "DOMContentLoaded",
-    probarGrupo
+    probarPersonasDelGrupo
 );
