@@ -2929,3 +2929,85 @@ body.itinerario-body {
     }
 
 }
+
+
+/* ==========================================================
+   CONFIRMACIONES CERRADAS
+========================================================== */
+
+.confirmacion-cerrada {
+    width: 100%;
+    max-width: 360px;
+
+    margin: 22px auto 4px;
+
+    padding: 18px 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    text-align: center;
+
+    border-radius: 14px;
+
+    background:
+        rgba(244, 238, 225, 0.65);
+
+    border:
+        1px solid
+        rgba(101, 113, 96, 0.15);
+
+    color: var(--green-dark);
+}
+
+
+.confirmacion-cerrada strong {
+    font-family: var(--font-elegant);
+
+    font-size: 1.55rem;
+
+    font-weight: 400;
+
+    color: var(--green-main);
+}
+
+
+.confirmacion-cerrada span {
+    font-family: var(--font-body);
+
+    font-size: 0.74rem;
+
+    line-height: 1.6;
+
+    color: var(--text-secondary);
+}
+
+
+/* BOTONES SÍ / NO DESPUÉS DEL CIERRE */
+
+.itinerario-opcion.opcion-bloqueada,
+.itinerario-opcion:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.65;
+}
+
+
+/*
+   IMPORTANTE:
+   si un Sí o No ya estaba seleccionado,
+   mantenemos visible la respuesta aunque
+   ahora esté bloqueada.
+*/
+
+.itinerario-opcion.seleccionada:disabled {
+    opacity: 1;
+
+    background: var(--green-main);
+
+    color: #ffffff;
+
+    border-color: var(--green-main);
+}
