@@ -1,5 +1,12 @@
-const SUPABASE_URL = "https://qxuecqhwfzmepadrmibe.supabase.co";
-const SUPABASE_KEY = "sb_publishable_xQ3k-t-PyR9HCLvMP4AzSQ_xRaAhs03";
+/* ==========================================================
+   CONFIGURACIÓN SUPABASE
+========================================================== */
+
+const SUPABASE_URL =
+    "https://qxuecqhwfzmepadrmibe.supabase.co";
+
+const SUPABASE_KEY =
+    "TU_PUBLISHABLE_KEY";
 
 const db = supabase.createClient(
     SUPABASE_URL,
@@ -8,10 +15,36 @@ const db = supabase.createClient(
 
 
 /* ==========================================================
+   FECHA LÍMITE PARA CONFIRMAR
+========================================================== */
+
+/*
+    A partir del 25 de diciembre de 2026
+    ya NO podrán crear ni modificar confirmaciones.
+
+    -06:00 corresponde al horario que estamos usando
+    para la fecha límite.
+*/
+
+const FECHA_LIMITE =
+    new Date("2025-12-25T00:00:00-06:00");
+
+
+function confirmacionesCerradas() {
+
+    const ahora = new Date();
+
+    return ahora >= FECHA_LIMITE;
+
+}
+
+
+/* ==========================================================
    VARIABLES
 ========================================================== */
 
 let personasGrupo = [];
+
 let respuestas = {};
 
 
@@ -22,14 +55,21 @@ let respuestas = {};
 const nombreGrupo =
     document.getElementById("nombre-grupo");
 
+
 const listaInvitados =
     document.getElementById("lista-invitados");
 
+
 const confirmacionInvitados =
-    document.getElementById("confirmacion-invitados");
+    document.getElementById(
+        "confirmacion-invitados"
+    );
+
 
 const btnConfirmar =
-    document.getElementById("btn-confirmar");
+    document.getElementById(
+        "btn-confirmar"
+    );
 
 
 /* ==========================================================
@@ -39,9 +79,14 @@ const btnConfirmar =
 function obtenerCodigo() {
 
     const params =
-        new URLSearchParams(window.location.search);
+        new URLSearchParams(
+            window.location.search
+        );
 
-    return params.get("invitado");
+
+    return params.get(
+        "invitado"
+    );
 
 }
 
@@ -55,11 +100,13 @@ function mostrarError(mensaje) {
     nombreGrupo.textContent =
         "Invitación no encontrada";
 
+
     listaInvitados.innerHTML = `
         <p class="itinerario-placeholder">
             ${mensaje}
         </p>
     `;
+
 
     confirmacionInvitados.innerHTML = `
         <div class="itinerario-confirmacion-placeholder">
@@ -75,6 +122,7 @@ function mostrarError(mensaje) {
         </div>
     `;
 
+
     btnConfirmar.disabled = true;
 
 }
@@ -86,14 +134,20 @@ function mostrarError(mensaje) {
 
 async function cargarInvitacion() {
 
-    const codigo = obtenerCodigo();
+    const codigo =
+        obtenerCodigo();
 
+
+    /* ======================================================
+       VALIDAR CÓDIGO
+    ====================================================== */
 
     if (!codigo) {
 
         mostrarError(
             "Este enlace no contiene un código de invitación."
         );
+
 
         return;
 
@@ -110,14 +164,23 @@ async function cargarInvitacion() {
             data: grupo,
             error: errorGrupo
         } = await db
-            .from("grupos_invitacion")
-            .select("id, codigo, nombre_grupo")
-            .eq("codigo", codigo)
+            .from(
+                "grupos_invitacion"
+            )
+            .select(
+                "id, codigo, nombre_grupo"
+            )
+            .eq(
+                "codigo",
+                codigo
+            )
             .maybeSingle();
 
 
         if (errorGrupo) {
+
             throw errorGrupo;
+
         }
 
 
@@ -127,10 +190,15 @@ async function cargarInvitacion() {
                 "El código de invitación no existe."
             );
 
+
             return;
 
         }
 
+
+        /* ==================================================
+           MOSTRAR NOMBRE DEL GRUPO
+        ================================================== */
 
         nombreGrupo.textContent =
             grupo.nombre_grupo;
@@ -145,34 +213,49 @@ async function cargarInvitacion() {
             data: personas,
             error: errorPersonas
         } = await db
-            .from("personas")
+            .from(
+                "personas"
+            )
             .select(
                 "id, grupo_id, nombre, apellido, tipo"
             )
-            .eq("grupo_id", grupo.id)
+            .eq(
+                "grupo_id",
+                grupo.id
+            )
             .order(
                 "id",
-                { ascending: true }
+                {
+                    ascending: true
+                }
             );
 
 
         if (errorPersonas) {
+
             throw errorPersonas;
+
         }
 
 
-        if (!personas || personas.length === 0) {
+        if (
+            !personas
+            ||
+            personas.length === 0
+        ) {
 
             mostrarError(
                 "Esta invitación no tiene personas registradas."
             );
+
 
             return;
 
         }
 
 
-        personasGrupo = personas;
+        personasGrupo =
+            personas;
 
 
 
@@ -185,7 +268,7 @@ async function cargarInvitacion() {
 
 
         /* ==================================================
-           4. BUSCAR CONFIRMACIONES YA GUARDADAS
+           4. CARGAR CONFIRMACIONES EXISTENTES
         ================================================== */
 
         await cargarConfirmaciones();
@@ -193,28 +276,63 @@ async function cargarInvitacion() {
 
 
         /* ==================================================
-           5. GENERAR BOTONES SÍ / NO
+           5. GENERAR FORMULARIO SÍ / NO
         ================================================== */
 
         mostrarFormularioConfirmacion();
 
 
-        comprobarFormulario();
 
+        /* ==================================================
+           6. VERIFICAR FECHA LÍMITE
+        ================================================== */
+
+        if (
+            confirmacionesCerradas()
+        ) {
+
+            mostrarConfirmacionesCerradas();
+
+        }
+        else {
+
+            comprobarFormulario();
+
+        }
+
+
+
+        /* ==================================================
+           CONSOLA
+        ================================================== */
 
         console.log(
             "Invitación cargada correctamente:",
             grupo
         );
 
+
         console.log(
             "Personas:",
             personasGrupo
         );
 
+
         console.log(
             "Respuestas:",
             respuestas
+        );
+
+
+        console.log(
+            "Fecha límite:",
+            FECHA_LIMITE
+        );
+
+
+        console.log(
+            "Confirmaciones cerradas:",
+            confirmacionesCerradas()
         );
 
     }
@@ -224,6 +342,7 @@ async function cargarInvitacion() {
             "Error cargando invitación:",
             error
         );
+
 
         mostrarError(
             "Ocurrió un problema al cargar la invitación."
@@ -240,31 +359,38 @@ async function cargarInvitacion() {
 
 function mostrarInvitados() {
 
-    listaInvitados.innerHTML = "";
+    listaInvitados.innerHTML =
+        "";
 
 
-    personasGrupo.forEach(persona => {
+    personasGrupo.forEach(
+        persona => {
 
-        const nombreCompleto =
-            `${persona.nombre} ${persona.apellido || ""}`
-                .trim();
-
-
-        const p =
-            document.createElement("p");
+            const nombreCompleto =
+                `${persona.nombre} ${persona.apellido || ""}`
+                    .trim();
 
 
-        p.className =
-            "itinerario-nombre-invitado";
+            const p =
+                document.createElement(
+                    "p"
+                );
 
 
-        p.textContent =
-            nombreCompleto;
+            p.className =
+                "itinerario-nombre-invitado";
 
 
-        listaInvitados.appendChild(p);
+            p.textContent =
+                nombreCompleto;
 
-    });
+
+            listaInvitados.appendChild(
+                p
+            );
+
+        }
+    );
 
 }
 
@@ -280,7 +406,8 @@ async function cargarConfirmaciones() {
 
     const idsPersonas =
         personasGrupo.map(
-            persona => persona.id
+            persona =>
+                persona.id
         );
 
 
@@ -288,7 +415,9 @@ async function cargarConfirmaciones() {
         data: confirmaciones,
         error
     } = await db
-        .from("confirmaciones")
+        .from(
+            "confirmaciones"
+        )
         .select(
             "id, persona_id, respuesta"
         )
@@ -304,6 +433,14 @@ async function cargarConfirmaciones() {
             "Error cargando confirmaciones:",
             error
         );
+
+
+        return;
+
+    }
+
+
+    if (!confirmaciones) {
 
         return;
 
@@ -330,214 +467,359 @@ async function cargarConfirmaciones() {
 
 function mostrarFormularioConfirmacion() {
 
-    confirmacionInvitados.innerHTML = "";
+    confirmacionInvitados.innerHTML =
+        "";
 
 
-    personasGrupo.forEach(persona => {
-
-        const nombreCompleto =
-            `${persona.nombre} ${persona.apellido || ""}`
-                .trim();
+    const cerrado =
+        confirmacionesCerradas();
 
 
+    personasGrupo.forEach(
+        persona => {
 
-        /* ==================================================
-           FILA
-        ================================================== */
-
-        const fila =
-            document.createElement("div");
-
-
-        fila.className =
-            "itinerario-confirmacion-fila";
+            const nombreCompleto =
+                `${persona.nombre} ${persona.apellido || ""}`
+                    .trim();
 
 
 
-        /* ==================================================
-           NOMBRE
-        ================================================== */
+            /* ==============================================
+               FILA
+            ============================================== */
 
-        const nombre =
-            document.createElement("span");
-
-
-        nombre.className =
-            "nombre";
+            const fila =
+                document.createElement(
+                    "div"
+                );
 
 
-        nombre.textContent =
-            nombreCompleto;
+            fila.className =
+                "itinerario-confirmacion-fila";
 
 
 
-        /* ==================================================
-           CONTENEDOR BOTONES
-        ================================================== */
+            /* ==============================================
+               NOMBRE
+            ============================================== */
 
-        const opciones =
-            document.createElement("div");
-
-
-        opciones.className =
-            "itinerario-confirmacion-opciones";
+            const nombre =
+                document.createElement(
+                    "span"
+                );
 
 
-
-        /* ==================================================
-           BOTÓN SÍ
-        ================================================== */
-
-        const btnSi =
-            document.createElement("button");
+            nombre.className =
+                "nombre";
 
 
-        btnSi.type =
-            "button";
-
-
-        btnSi.className =
-            "itinerario-opcion";
-
-
-        btnSi.textContent =
-            "Sí";
+            nombre.textContent =
+                nombreCompleto;
 
 
 
-        /* ==================================================
-           BOTÓN NO
-        ================================================== */
+            /* ==============================================
+               CONTENEDOR DE OPCIONES
+            ============================================== */
 
-        const btnNo =
-            document.createElement("button");
-
-
-        btnNo.type =
-            "button";
+            const opciones =
+                document.createElement(
+                    "div"
+                );
 
 
-        btnNo.className =
-            "itinerario-opcion";
-
-
-        btnNo.textContent =
-            "No";
+            opciones.className =
+                "itinerario-confirmacion-opciones";
 
 
 
-        /* ==================================================
-           RESPUESTA YA EXISTENTE
-        ================================================== */
+            /* ==============================================
+               BOTÓN SÍ
+            ============================================== */
 
-        if (
-            respuestas[persona.id] === "si"
-        ) {
-
-            btnSi.classList.add(
-                "seleccionada"
-            );
-
-        }
+            const btnSi =
+                document.createElement(
+                    "button"
+                );
 
 
-        if (
-            respuestas[persona.id] === "no"
-        ) {
+            btnSi.type =
+                "button";
 
-            btnNo.classList.add(
-                "seleccionada"
-            );
 
-        }
+            btnSi.className =
+                "itinerario-opcion";
+
+
+            btnSi.textContent =
+                "Sí";
 
 
 
-        /* ==================================================
-           CLICK SÍ
-        ================================================== */
+            /* ==============================================
+               BOTÓN NO
+            ============================================== */
 
-        btnSi.addEventListener(
-            "click",
-            () => {
+            const btnNo =
+                document.createElement(
+                    "button"
+                );
 
+
+            btnNo.type =
+                "button";
+
+
+            btnNo.className =
+                "itinerario-opcion";
+
+
+            btnNo.textContent =
+                "No";
+
+
+
+            /* ==============================================
+               MOSTRAR RESPUESTA EXISTENTE
+            ============================================== */
+
+            if (
                 respuestas[
                     persona.id
-                ] = "si";
-
+                ] === "si"
+            ) {
 
                 btnSi.classList.add(
                     "seleccionada"
                 );
 
-
-                btnNo.classList.remove(
-                    "seleccionada"
-                );
-
-
-                comprobarFormulario();
-
             }
-        );
 
 
-
-        /* ==================================================
-           CLICK NO
-        ================================================== */
-
-        btnNo.addEventListener(
-            "click",
-            () => {
-
+            if (
                 respuestas[
                     persona.id
-                ] = "no";
-
+                ] === "no"
+            ) {
 
                 btnNo.classList.add(
                     "seleccionada"
                 );
 
+            }
 
-                btnSi.classList.remove(
-                    "seleccionada"
+
+
+            /* ==============================================
+               SI YA PASÓ LA FECHA LÍMITE
+            ============================================== */
+
+            if (cerrado) {
+
+                btnSi.disabled =
+                    true;
+
+
+                btnNo.disabled =
+                    true;
+
+
+                btnSi.classList.add(
+                    "opcion-bloqueada"
                 );
 
 
-                comprobarFormulario();
+                btnNo.classList.add(
+                    "opcion-bloqueada"
+                );
 
             }
+
+
+
+            /* ==============================================
+               CLICK SÍ
+            ============================================== */
+
+            btnSi.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        confirmacionesCerradas()
+                    ) {
+
+                        mostrarAvisoFechaLimite();
+
+                        return;
+
+                    }
+
+
+                    respuestas[
+                        persona.id
+                    ] = "si";
+
+
+                    btnSi.classList.add(
+                        "seleccionada"
+                    );
+
+
+                    btnNo.classList.remove(
+                        "seleccionada"
+                    );
+
+
+                    comprobarFormulario();
+
+                }
+            );
+
+
+
+            /* ==============================================
+               CLICK NO
+            ============================================== */
+
+            btnNo.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        confirmacionesCerradas()
+                    ) {
+
+                        mostrarAvisoFechaLimite();
+
+                        return;
+
+                    }
+
+
+                    respuestas[
+                        persona.id
+                    ] = "no";
+
+
+                    btnNo.classList.add(
+                        "seleccionada"
+                    );
+
+
+                    btnSi.classList.remove(
+                        "seleccionada"
+                    );
+
+
+                    comprobarFormulario();
+
+                }
+            );
+
+
+
+            /* ==============================================
+               AGREGAR ELEMENTOS
+            ============================================== */
+
+            opciones.appendChild(
+                btnSi
+            );
+
+
+            opciones.appendChild(
+                btnNo
+            );
+
+
+            fila.appendChild(
+                nombre
+            );
+
+
+            fila.appendChild(
+                opciones
+            );
+
+
+            confirmacionInvitados.appendChild(
+                fila
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================================
+   MOSTRAR ESTADO CERRADO
+========================================================== */
+
+function mostrarConfirmacionesCerradas() {
+
+    btnConfirmar.disabled =
+        true;
+
+
+    btnConfirmar.textContent =
+        "Confirmaciones cerradas";
+
+
+    /* Evitar duplicar el aviso */
+
+    if (
+        document.querySelector(
+            ".confirmacion-cerrada"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const aviso =
+        document.createElement(
+            "div"
         );
 
 
-
-        opciones.appendChild(
-            btnSi
-        );
+    aviso.className =
+        "confirmacion-cerrada";
 
 
-        opciones.appendChild(
-            btnNo
-        );
+    aviso.innerHTML = `
+
+        <strong>
+            El periodo de confirmación ha finalizado.
+        </strong>
+
+        <span>
+            La fecha límite para confirmar o modificar
+            la asistencia fue el 24 de diciembre de 2026.
+        </span>
+
+    `;
 
 
-        fila.appendChild(
-            nombre
-        );
+    confirmacionInvitados.appendChild(
+        aviso
+    );
+
+}
 
 
-        fila.appendChild(
-            opciones
-        );
+/* ==========================================================
+   AVISO SI INTENTAN MODIFICAR
+========================================================== */
 
+function mostrarAvisoFechaLimite() {
 
-        confirmacionInvitados.appendChild(
-            fila
-        );
-
-    });
+    alert(
+        "El periodo para confirmar o modificar la asistencia ha finalizado."
+    );
 
 }
 
@@ -548,18 +830,48 @@ function mostrarFormularioConfirmacion() {
 
 function comprobarFormulario() {
 
+    /* ======================================================
+       SI YA CERRÓ → BOTÓN BLOQUEADO
+    ====================================================== */
+
+    if (
+        confirmacionesCerradas()
+    ) {
+
+        btnConfirmar.disabled =
+            true;
+
+
+        btnConfirmar.textContent =
+            "Confirmaciones cerradas";
+
+
+        return;
+
+    }
+
+
+
+    /* ======================================================
+       COMPROBAR RESPUESTAS
+    ====================================================== */
+
     const todosRespondieron =
         personasGrupo.every(
             persona => {
 
                 return (
+
                     respuestas[
                         persona.id
                     ] === "si"
+
                     ||
+
                     respuestas[
                         persona.id
                     ] === "no"
+
                 );
 
             }
@@ -582,6 +894,22 @@ async function guardarRespuesta(
 ) {
 
     /* ======================================================
+       SEGUNDA VALIDACIÓN DE FECHA
+    ====================================================== */
+
+    if (
+        confirmacionesCerradas()
+    ) {
+
+        throw new Error(
+            "CONFIRMACIONES_CERRADAS"
+        );
+
+    }
+
+
+
+    /* ======================================================
        BUSCAR SI YA EXISTE
     ====================================================== */
 
@@ -589,8 +917,12 @@ async function guardarRespuesta(
         data: existente,
         error: errorBuscar
     } = await db
-        .from("confirmaciones")
-        .select("id")
+        .from(
+            "confirmaciones"
+        )
+        .select(
+            "id"
+        )
         .eq(
             "persona_id",
             personaId
@@ -599,7 +931,9 @@ async function guardarRespuesta(
 
 
     if (errorBuscar) {
+
         throw errorBuscar;
+
     }
 
 
@@ -613,9 +947,14 @@ async function guardarRespuesta(
         const {
             error: errorActualizar
         } = await db
-            .from("confirmaciones")
+            .from(
+                "confirmaciones"
+            )
             .update({
-                respuesta: respuesta
+
+                respuesta:
+                    respuesta
+
             })
             .eq(
                 "id",
@@ -623,8 +962,12 @@ async function guardarRespuesta(
             );
 
 
-        if (errorActualizar) {
+        if (
+            errorActualizar
+        ) {
+
             throw errorActualizar;
+
         }
 
     }
@@ -639,18 +982,26 @@ async function guardarRespuesta(
         const {
             error: errorInsertar
         } = await db
-            .from("confirmaciones")
+            .from(
+                "confirmaciones"
+            )
             .insert({
+
                 persona_id:
                     personaId,
 
                 respuesta:
                     respuesta
+
             });
 
 
-        if (errorInsertar) {
+        if (
+            errorInsertar
+        ) {
+
             throw errorInsertar;
+
         }
 
     }
@@ -664,11 +1015,32 @@ async function guardarRespuesta(
 
 async function guardarConfirmaciones() {
 
+    /* ======================================================
+       VALIDAR FECHA ANTES DE HACER NADA
+    ====================================================== */
+
+    if (
+        confirmacionesCerradas()
+    ) {
+
+        mostrarAvisoFechaLimite();
+
+
+        mostrarConfirmacionesCerradas();
+
+
+        return;
+
+    }
+
+
+
     const textoOriginal =
         btnConfirmar.textContent;
 
 
-    btnConfirmar.disabled = true;
+    btnConfirmar.disabled =
+        true;
 
 
     btnConfirmar.textContent =
@@ -677,17 +1049,40 @@ async function guardarConfirmaciones() {
 
     try {
 
+        /* ==================================================
+           GUARDAR CADA PERSONA
+        ================================================== */
+
         for (
             const persona
             of personasGrupo
         ) {
 
+            /* Verificar nuevamente la fecha */
+
+            if (
+                confirmacionesCerradas()
+            ) {
+
+                throw new Error(
+                    "CONFIRMACIONES_CERRADAS"
+                );
+
+            }
+
+
             await guardarRespuesta(
+
                 persona.id,
-                respuestas[persona.id]
+
+                respuestas[
+                    persona.id
+                ]
+
             );
 
         }
+
 
 
         /* ==================================================
@@ -703,8 +1098,36 @@ async function guardarConfirmaciones() {
         );
 
 
+
+        /* ==================================================
+           DESPUÉS DE 2.5 SEGUNDOS
+        ================================================== */
+
         setTimeout(
             () => {
+
+                btnConfirmar.classList.remove(
+                    "confirmacion-exitosa"
+                );
+
+
+                /*
+                    Si durante esos segundos
+                    se alcanzó la fecha límite,
+                    cerrar el formulario.
+                */
+
+                if (
+                    confirmacionesCerradas()
+                ) {
+
+                    mostrarConfirmacionesCerradas();
+
+
+                    return;
+
+                }
+
 
                 btnConfirmar.textContent =
                     "Actualizar asistencia";
@@ -725,6 +1148,32 @@ async function guardarConfirmaciones() {
             error
         );
 
+
+        /* ==================================================
+           ERROR POR FECHA CERRADA
+        ================================================== */
+
+        if (
+            error.message
+            ===
+            "CONFIRMACIONES_CERRADAS"
+        ) {
+
+            mostrarAvisoFechaLimite();
+
+
+            mostrarConfirmacionesCerradas();
+
+
+            return;
+
+        }
+
+
+
+        /* ==================================================
+           OTRO ERROR
+        ================================================== */
 
         alert(
             "No fue posible guardar la confirmación. Intenta nuevamente."
