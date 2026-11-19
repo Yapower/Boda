@@ -1,4 +1,4 @@
-const targetDate = new Date("2027-01-24T16:30:00").getTime();
+const targetDate = new Date("2027-01-23T15:30:00").getTime();
 
 function updateCountdown() {
 
@@ -62,7 +62,7 @@ BEGIN:VEVENT
 SUMMARY:Boda Yoab & Daniela
 DESCRIPTION:Celebración de nuestra boda
 DTSTART:20270123T153000
-DTEND:20270123T153000
+DTEND:20270124T000000
 LOCATION:
 END:VEVENT
 END:VCALENDAR
